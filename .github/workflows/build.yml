@@ -1,4 +1,4 @@
-name: Build AIX Extension
+name: Build MIT App Inventor Extension
 
 on:
   push:
@@ -12,31 +12,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Java
+      - name: Install Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 11
 
-      - name: Download App Inventor Extension Tools
+      - name: Install Android SDK
         run: |
-          wget https://github.com/mit-cml/appinventor-sources/archive/refs/heads/master.zip
-          unzip master.zip
+          sudo apt-get update
+          sudo apt-get install -y android-sdk
 
-      - name: Compile Extension
+      - name: Download App Inventor sources
+        run: |
+          git clone https://github.com/mit-cml/appinventor-sources.git
+
+      - name: Build components
+        run: |
+          cd appinventor-sources/appinventor
+          ant MakeExtensions
+
+      - name: Compile extension
         run: |
           mkdir build
-          javac -cp appinventor-sources-master/appinventor/components/build/classes -d build src/dev/Dev.java
+          javac -cp "appinventor-sources/appinventor/buildserver/build/classes:/usr/lib/android-sdk/platforms/android-30/android.jar" -d build src/dev/Dev.java
 
-      - name: Create AIX File
+      - name: Package extension
         run: |
           cd build
           zip -r Dev.aix *
 
-      - name: Upload Extension
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: Dev-extension
