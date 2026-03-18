@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Build AIX
         uses: pavi2410/AIX-Action@main
@@ -13,7 +13,7 @@ jobs:
           name: abajaba
 
       - name: Upload AIX
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: abajaba_extension
+          name: abajaba-extension
           path: out/*.aix
