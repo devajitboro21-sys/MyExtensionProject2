@@ -11,3 +11,9 @@ jobs:
         uses: pavi2410/AIX-Action@main
         with:
           name: abajaba
+
+      - name: Upload AIX
+        uses: actions/upload-artifact@v3
+        with:
+          name: abajaba_extension
+          path: out/*.aix
