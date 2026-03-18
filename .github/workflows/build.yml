@@ -11,6 +11,7 @@ jobs:
         uses: pavi2410/AIX-Action@main
         with:
           name: abajaba
+          source-dir: src
 
       - name: Upload AIX
         uses: actions/upload-artifact@v4
