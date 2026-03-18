@@ -10,6 +10,7 @@ jobs:
       - name: Build AIX
         uses: pavi2410/AIX-Action@main
         with:
+          package: aaa
           name: abajaba
           source-dir: src
 
