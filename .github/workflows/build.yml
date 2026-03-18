@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Java
+      - name: Install Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -23,27 +23,25 @@ jobs:
 
       - name: Install Android SDK
         run: |
-          sudo apt update
-          sudo apt install -y android-sdk
+          sudo apt-get update
+          sudo apt-get install -y android-sdk
 
-      - name: Download App Inventor runtime
+      - name: Download App Inventor Runtime
         run: |
           git clone https://github.com/mit-cml/appinventor-sources.git
 
-      - name: Compile extension
+      - name: Compile Extension
         run: |
           mkdir build
-          javac \
-          -cp "/usr/lib/android-sdk/platforms/android-30/android.jar:appinventor-sources/appinventor/components/build/classes" \
-          -d build \
-          src/dev/Dev.java
+          javac -cp "/usr/lib/android-sdk/platforms/android-30/android.jar:appinventor-sources/appinventor/components/build/classes" \
+          -d build src/dev/Dev.java
 
-      - name: Create AIX
+      - name: Package AIX
         run: |
           cd build
           zip -r Dev.aix *
 
-      - name: Upload extension
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Dev-extension
