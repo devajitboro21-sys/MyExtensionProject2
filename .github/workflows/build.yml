@@ -6,7 +6,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build AIX
-        uses: pavi2410/AIX-Action@v2
+        uses: pavi2410/AIX-Action@master
         with:
           name: abajaba
-
