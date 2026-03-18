@@ -11,9 +11,9 @@ import com.google.appinventor.components.runtime.TextBox;
 import com.google.appinventor.components.runtime.util.YailList;
 
 @SimpleObject
-public class abajaba extends AndroidNonvisibleComponent {
+public class aaa extends AndroidNonvisibleComponent {
 
-    public abajaba(ComponentContainer container) {
+    public aaa(ComponentContainer container) {
         super(container.$form());
     }
 
