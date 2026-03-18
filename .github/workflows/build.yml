@@ -10,15 +10,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Download App Inventor Tools
+      - name: Download App Inventor Sources
         run: |
           git clone https://github.com/mit-cml/appinventor-sources.git
 
@@ -33,7 +33,7 @@ jobs:
           zip -r Dev.aix *
 
       - name: Upload Extension
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Dev-extension
           path: build/Dev.aix
