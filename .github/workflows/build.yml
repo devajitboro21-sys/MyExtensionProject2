@@ -10,7 +10,8 @@ jobs:
       - name: Build AIX
         uses: pavi2410/AIX-Action@main
         with:
-          name: abajaba
+          package-name: aaa
+          extension-name: abajaba
 
       - name: Upload AIX
         uses: actions/upload-artifact@v4
