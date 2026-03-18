@@ -13,30 +13,34 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.0.0
+        uses: actions/checkout@v4
 
       - name: Setup Java
-        uses: actions/setup-java@v4.0.0
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 11
 
-      - name: Download App Inventor sources
-        run: |
-          git clone https://github.com/mit-cml/appinventor-sources.git
+      - name: Clone App Inventor Sources
+        run: git clone https://github.com/mit-cml/appinventor-sources.git
 
-      - name: Compile extension
+      - name: Build App Inventor Components
+        run: |
+          cd appinventor-sources/appinventor
+          ant MakeExtensions
+
+      - name: Compile Extension
         run: |
           mkdir build
-          javac -cp appinventor-sources/appinventor/components/build/classes -d build src/dev/Dev.java
+          javac -cp appinventor-sources/appinventor/buildserver/build/classes -d build src/dev/Dev.java
 
-      - name: Create AIX
+      - name: Package AIX
         run: |
           cd build
           zip -r Dev.aix *
 
-      - name: Upload extension
-        uses: actions/upload-artifact@v4.0.0
+      - name: Upload Extension
+        uses: actions/upload-artifact@v4
         with:
           name: Dev-extension
           path: build/Dev.aix
