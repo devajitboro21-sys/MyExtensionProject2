@@ -4,30 +4,31 @@ on:
   push:
     branches: [ main ]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Java
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '11'
+          distribution: temurin
+          java-version: 11
 
-      - name: Download App Inventor Sources
+      - name: Prepare folders
+        run: mkdir -p build
+
+      - name: Compile Dev.java
         run: |
-          git clone https://github.com/mit-cml/appinventor-sources.git
+          javac -d build src/dev/Dev.java
 
-      - name: Compile Extension
-        run: |
-          mkdir build
-          javac -cp appinventor-sources/appinventor/components/build/classes -d build src/dev/Dev.java
-
-      - name: Create AIX
+      - name: Create AIX file
         run: |
           cd build
           zip -r Dev.aix *
